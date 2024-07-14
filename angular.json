@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "health-net-app:build:production"
+              "buildTarget": "health-net-app:build:production"
             },
             "development": {
-              "browserTarget": "health-net-app:build:development"
+              "buildTarget": "health-net-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "health-net-app:build"
+            "buildTarget": "health-net-app:build"
           }
         },
         "test": {
