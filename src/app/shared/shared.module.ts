@@ -5,6 +5,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -17,7 +18,8 @@ import { FooterComponent } from './footer/footer.component';
     FooterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     BreadcrumbsComponent,

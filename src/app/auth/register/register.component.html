@@ -1,73 +1,146 @@
 <body class="bg-primary">
-
-<div id="layoutAuthentication">
+  <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
-        <main>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-7">
-                        <!-- Basic registration form-->
-                        <div class="card shadow-lg border-0 rounded-lg mt-4">
-                            <div class="card-header justify-content-center">
-                                <h3 class="font-weight-light my-2">Create Account</h3></div>
-                            <div class="card-body">
-                                <!-- Registration form-->
-                                <form>
-                                    <!-- Form Row-->
-                                    <div class="form-row">
-                                        <div class="col-md-6">
-                                            <!-- Form Group (first name)-->
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="inputFirstName">First Name</label>
-                                                <input class="form-control py-4" id="inputFirstName" type="text" placeholder="Enter first name" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <!-- Form Group (last name)-->
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="inputLastName">Last Name</label>
-                                                <input class="form-control py-4" id="inputLastName" type="text" placeholder="Enter last name" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Form Group (email address)            -->
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                        <input class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address" />
-                                    </div>
-                                    <!-- Form Row    -->
-                                    <div class="form-row">
-                                        <div class="col-md-6">
-                                            <!-- Form Group (password)-->
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="inputPassword">Password</label>
-                                                <input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <!-- Form Group (confirm password)-->
-                                            <div class="form-group">
-                                                <label class="small mb-1" for="inputConfirmPassword">Confirm Password</label>
-                                                <input class="form-control py-4" id="inputConfirmPassword" type="password" placeholder="Confirm password" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Form Group (create account submit)-->
-                                    <div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block" href="auth-login-basic.html">Create Account</a></div>
-                                </form>
-                            </div>
-                            <div class="card-footer text-center">
-                                <div class="small">
-                                    <a [routerLink]="['/login']">Have an account? Go to login</a></div>
-                            </div>
-                        </div>
-                    </div>
+      <main>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-7">
+              <!-- Basic registration form-->
+              <div class="card shadow-lg border-0 rounded-lg mt-4">
+                <div class="card-header justify-content-center">
+                  <h3 class="font-weight-light my-2">Registro de usuarios</h3>
                 </div>
+                <div class="card-body">
+                  <!-- Registration form-->
+                  <form
+                    [formGroup]="registerForm"
+                    (submit)="onSubmitRegister()">
+                    <!-- Form Row-->
+                    <!-- Form Group (full name)-->
+                    <div class="form-group">
+                      <label class="small mb-1" for="fullname">Nombre completo</label>
+                      <input
+                        class="form-control py-4" [ngClass]="{'is-invalid': (nombre.dirty || nombre.touched) && nombre.invalid}"
+                        id="fullname"
+                        type="text"
+                        placeholder="Ingrese su nombre completo"
+                        formControlName="nombre"/>
+                      <div *ngIf="(nombre.dirty || nombre.touched) && nombre.invalid" class="invalid-feedback">
+                        El nombre es un dato requerido
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col-md-6">
+                        <!-- Form Group (email address)            -->
+                        <div class="form-group">
+                          <label class="small mb-1" for="inputEmailAddress">Correo electronico</label>
+                          <input
+                            class="form-control py-4" [ngClass]="{'is-invalid': (email.dirty || email.touched) && email.invalid}"
+                            id="inputEmailAddress"
+                            type="email"
+                            aria-describedby="emailHelp"
+                            placeholder="Ingrese su direccion de email"
+                            formControlName="email"/>
+                          <div *ngIf="(email.dirty || email.touched) && email.invalid && email.errors?.required" class="invalid-feedback">
+                            El correo electronico es requerido
+                          </div>
+                          <div *ngIf="(email.dirty || email.touched) && email.invalid && email.errors?.email" class="invalid-feedback">
+                            El correo electronico es invalido
+                          </div>
+                          <div *ngIf="(email.dirty || email.touched) && email.invalid && email.errors?.emailExists" class="invalid-feedback">
+                            El email ya se encuentra registrado
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <!-- Form Group (telefono)            -->
+                        <div class="form-group">
+                          <label class="small mb-1" for="inputTelefono">Telefono</label>
+                          <input
+                            class="form-control py-4" [ngClass]="{'is-invalid': (telefono.dirty || telefono.touched) && telefono.invalid}"
+                            id="inputTelefono"
+                            type="text"
+                            aria-describedby="telefonoHelp"
+                            placeholder="Ingrese su numero de celular"
+                            formControlName="telefono"/>
+                          <div *ngIf="(telefono.dirty || telefono.touched) && telefono.invalid && telefono.errors?.minlength" class="invalid-feedback">
+                            El telefono es un dato requerido debe de tener el formato 9999999999
+                          </div>
+                          <div *ngIf="(telefono.dirty || telefono.touched) && telefono.invalid && telefono.errors?.required" class="invalid-feedback">
+                            El telefono es un dato requerido
+                          </div>
+                          <div *ngIf="(telefono.dirty || telefono.touched) && telefono.invalid && telefono.errors?.phoneExists" class="invalid-feedback">
+                            Este telefono ya se encuentra registrado
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Form Row    -->
+                    <div class="form-row">
+                      <div class="col-md-6">
+                        <!-- Form Group (password)-->
+                        <div class="form-group">
+                          <label class="small mb-1" for="inputPassword">Contraseña</label>
+                          <input
+                            class="form-control py-4" [ngClass]="{'is-invalid': (password.dirty || password.touched) && password.invalid}"
+                            id="inputPassword"
+                            type="password"
+                            placeholder="Ingrese una contraseña"
+                            formControlName="password"/>
+                          <div *ngIf="(password.dirty || password.touched) && password.invalid && password.errors?.minlength" class="invalid-feedback">
+                            La contraseña debe de ser minimo de 6 letras, numero y algun simbolo.
+                          </div>
+                          <div *ngIf="(password.dirty || password.touched) && password.invalid && password.errors?.required" class="invalid-feedback">
+                            La contraseña es un dato requerido
+                          </div>
+                          <div *ngIf="(password.dirty || password.touched) && password.invalid && password.errors?.passwordStrength" class="invalid-feedback">
+                            La contraseña debe de letras minusculas, mayusculas, numeros y algun simbolo
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <!-- Form Group (confirm password)-->
+                        <div class="form-group">
+                          <label class="small mb-1" for="inputConfirmPassword">Confirme su contraseña</label>
+                          <input
+                            class="form-control py-4" [ngClass]="{'is-invalid': (repassword.dirty || repassword.touched) && (repassword.invalid || registerForm.errors?.confirmationFail)}"
+                            id="inputConfirmPassword"
+                            type="password"
+                            placeholder="Confirme su contraseña"
+                            formControlName="repassword"/>
+                          <div *ngIf="(repassword.dirty || repassword.touched) && repassword.invalid && repassword.errors?.required" class="invalid-feedback">
+                            La confirmacion de la contraseña es requerida
+                          </div>
+                          <div *ngIf="(repassword.dirty || repassword.touched) && registerForm.errors?.confirmationFail" class="invalid-feedback">
+                            La confirmacion de la contraseña debe de ser igual a la contraseña.
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <!-- Form Group (create account submit)-->
+                    <div class="form-group mt-4 mb-0">
+                      <button type="submit" class="btn btn-primary btn-block" type="submit" >
+                        Enviar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="card-footer text-center">
+                  <div class="small">
+                    <a [routerLink]="['/login']">Ya te tienes una cuenta? Inicia sesion aqui</a>
+                  </div>
+                </div>
+              </div>
             </div>
-        </main>
+          </div>
+        </div>
+      </main>
     </div>
     <div id="layoutAuthentication_footer">
-        <app-footer></app-footer>
+      <app-footer></app-footer>
     </div>
-</div>
+  </div>
 </body>

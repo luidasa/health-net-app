@@ -8,21 +8,35 @@ import { HospitalsComponent } from './pages/hospitals/hospitals.component';
 import { LabsComponent } from './pages/labs/labs.component';
 import { NopagefoundComponent } from './pages/nopagefound/nopagefound.component';
 import { PagesComponent } from './pages/pages.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AnonymousGuard } from './guards/anonymous.guard';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
-
-  {path: '', component: PagesComponent, children: [
-    {path: 'dashboard', component: DashboardComponent},
-    {path: 'hospitals', component: HospitalsComponent},
-    {path: 'doctors', component: DoctorsComponent},
-    {path: 'labs', component: LabsComponent},
-    {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-  
-  ]},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: '**', component: NopagefoundComponent},
-
+  {
+    path: '',
+    component: PagesComponent,
+    children: [
+      { path: 'account', component: ProfileComponent, canActivate: [AuthGuard]
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [AuthGuard],
+      },
+      { path: 'hospitals', component: HospitalsComponent },
+      { path: 'doctors', component: DoctorsComponent },
+      { path: 'labs', component: LabsComponent },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+    ],
+  },
+  { path: 'login', component: LoginComponent, canActivate: [AnonymousGuard] },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [AnonymousGuard],
+  },
+  { path: '**', component: NopagefoundComponent },
 ];
 
 @NgModule({
